@@ -90,6 +90,7 @@ static const NSUInteger DefaultLimitOnShipmentVolume = 5;
 
 - (void)setRawMaterialStorage:(Warehouse *)rawMaterialStorage
 {
+    [rawMaterialStorage_ retain];
     [rawMaterialStorage_ release];
     rawMaterialStorage_ = rawMaterialStorage;
 }
@@ -191,7 +192,7 @@ static const NSUInteger DefaultLimitOnShipmentVolume = 5;
                     /**
                      *  @remarks    One of the transporters has decided to retire.
                      */
-                    [[self.freeTransporters anyObject] release];
+                    [self.freeTransporters removeObject:[self.freeTransporters anyObject]];
                 }
             }
 
