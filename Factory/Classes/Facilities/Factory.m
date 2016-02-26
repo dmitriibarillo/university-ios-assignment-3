@@ -77,21 +77,18 @@ static const NSUInteger DefaultLimitOnShipmentVolume = 5;
 - (void)setFreeTransporters:(NSMutableSet *)freeTransporters
 {
     [freeTransporters retain];
-    [freeTransporters_ release];
     freeTransporters_ = freeTransporters;
 }
 
 - (void)setFinishedProductStorage:(Warehouse *)finishedProductStorage
 {
     [finishedProductStorage retain];
-    [finishedProductStorage_ release];
     finishedProductStorage_ = finishedProductStorage;
 }
 
 - (void)setRawMaterialStorage:(Warehouse *)rawMaterialStorage
 {
-    [rawMaterialStorage_ retain];
-    [rawMaterialStorage_ release];
+    [rawMaterialStorage retain];
     rawMaterialStorage_ = rawMaterialStorage;
 }
 
@@ -109,6 +106,7 @@ static const NSUInteger DefaultLimitOnShipmentVolume = 5;
             transporter.surname = [NSString stringWithFormat:@"Surname %li", (long)counter];
             [transporter moveToLocation:self];
             [freeTransporters_ addObject:transporter];
+            [transporter release];
         }
 
         finishedProductStorage_ = [[Warehouse alloc] init];
@@ -133,11 +131,19 @@ static const NSUInteger DefaultLimitOnShipmentVolume = 5;
 
 - (void)dealloc
 {
-    self.finishedProductStorage = nil;
-    self.rawMaterialStorage = nil;
-
+    [freeTransporters_ release];
+    freeTransporters_ = nil;
+    [occupiedTransporters_ release];
+    occupiedTransporters_ = nil;
+    [restingTransporters_ release];
+    restingTransporters_ = nil;
+    
     [assemblyLine_ release];
     assemblyLine_ = nil;
+    [finishedProductStorage_ release];
+    finishedProductStorage_ = nil;
+    [rawMaterialStorage_ release];
+    rawMaterialStorage_ = nil;
 
     [super dealloc];
 }

@@ -46,6 +46,17 @@ static const NSInteger WarehouseErrorCodeNotEnoughWares = -1;
     return wares_;
 }
 
+#pragma mark - Deallocation
+
+- (void)dealloc
+{
+    [wares_ release];
+    wares_ = nil;
+    
+    [super dealloc];
+}
+
+
 #pragma mark - LocationProtocol implementation
 
 - (float)latitude

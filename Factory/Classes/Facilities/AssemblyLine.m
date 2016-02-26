@@ -27,7 +27,7 @@
 
 - (FinishedProduct *)processRawMaterials:(NSSet *)rawMaterials
 {
-    sleep(1);
+    sleep(0.1);
 
     return [[[FinishedProduct alloc] initWithRawMaterials:rawMaterials] autorelease];
 }
