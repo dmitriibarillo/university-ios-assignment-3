@@ -11,6 +11,6 @@ int main(int argc, char * argv[])
         Factory *const factory = [[Factory alloc] init];
         [factory simulateWorkingMonth];
     }
-
+    sleep(10);
     return 0;
 }
