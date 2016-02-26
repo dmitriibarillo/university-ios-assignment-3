@@ -25,7 +25,7 @@
 {
     self = [super init];
     if (self) {
-        [rawMaterials_ release];
+        //[rawMaterials_ release];
         rawMaterials_ = [rawMaterials copy];
     }
 

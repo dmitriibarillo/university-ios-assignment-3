@@ -77,18 +77,21 @@ static const NSUInteger DefaultLimitOnShipmentVolume = 5;
 - (void)setFreeTransporters:(NSMutableSet *)freeTransporters
 {
     [freeTransporters retain];
+    [freeTransporters_ release];
     freeTransporters_ = freeTransporters;
 }
 
 - (void)setFinishedProductStorage:(Warehouse *)finishedProductStorage
 {
     [finishedProductStorage retain];
+    [finishedProductStorage_ release];
     finishedProductStorage_ = finishedProductStorage;
 }
 
 - (void)setRawMaterialStorage:(Warehouse *)rawMaterialStorage
 {
     [rawMaterialStorage retain];
+    [rawMaterialStorage_ release];
     rawMaterialStorage_ = rawMaterialStorage;
 }
 
