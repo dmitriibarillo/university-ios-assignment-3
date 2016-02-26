@@ -13,17 +13,11 @@ static const NSInteger WarehouseErrorCodeNotEnoughWares = -1;
 
 @interface Warehouse ()
 
-@property (nonatomic, retain) NSMutableDictionary *wares;
+@property (nonatomic, strong) NSMutableDictionary *wares;
 
 @end
 
 @implementation Warehouse
-
-@synthesize capacity = capacity_;
-@synthesize latitude = latitude_;
-@synthesize longitude = longitude_;
-
-@synthesize wares = wares_;
 
 #pragma mark - Getters
 
@@ -39,34 +33,23 @@ static const NSInteger WarehouseErrorCodeNotEnoughWares = -1;
 
 - (NSMutableDictionary *)wares
 {
-    if (!wares_) {
-        wares_ = [[NSMutableDictionary alloc] init];
+    if (!_wares) {
+        _wares = [[NSMutableDictionary alloc] init];
     }
 
-    return wares_;
+    return _wares;
 }
-
-#pragma mark - Deallocation
-
-- (void)dealloc
-{
-    [wares_ release];
-    wares_ = nil;
-    
-    [super dealloc];
-}
-
 
 #pragma mark - LocationProtocol implementation
 
 - (float)latitude
 {
-    return latitude_;
+    return _latitude;
 }
 
 - (float)longitude
 {
-    return longitude_;
+    return _longitude;
 }
 
 #pragma mark - WarehouseProtocol implementation
@@ -80,7 +63,7 @@ static const NSInteger WarehouseErrorCodeNotEnoughWares = -1;
                       error:(NSError **)error
 {
     if (count <= [self.wares count]) {
-        NSMutableSet *const mutableShipment = [[[NSMutableSet alloc] init] autorelease	];
+        NSMutableSet *const mutableShipment = [[NSMutableSet alloc] init] ;
         for (NSUInteger index = 0; index < count; ++index) {
             id key = [[self.wares allKeys] objectAtIndex:index];
             [mutableShipment addObject:[self.wares objectForKey:key]];
@@ -89,7 +72,7 @@ static const NSInteger WarehouseErrorCodeNotEnoughWares = -1;
             [self.wares removeObjectForKey:[ware uniqueIdentifier]];
         }
 
-        return [[mutableShipment copy] autorelease];
+        return [mutableShipment copy];
     }
 
     if (!!error) {
@@ -98,8 +81,6 @@ static const NSInteger WarehouseErrorCodeNotEnoughWares = -1;
                 @"There is not enough wares in the warehouse",
                 kWarehouseErrorDescription,
              nil];
-        
-        [userInfo autorelease];
         
         (*error) = [NSError errorWithDomain:WarehouseErrorDomain
                                        code:WarehouseErrorCodeNotEnoughWares
